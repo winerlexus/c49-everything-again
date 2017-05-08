@@ -1,14 +1,18 @@
-
+####[]not complete for overall cases
+####[]not solve cases which are 2 box next to each other
+####[]''game loop'' is not completed 
 ##generate matrix:
-def display_map(size,pusher,boxlist,potal):
+def display_map(size,pusher,box,potal):
     for y in range(0,size['y']+2):
         for x in range(0,size['x']+2):
             #content_map
             if x==pusher['x'] and y==pusher['y']:
                 print(' p ',end='')
             #boxes:
-            elif x==box['x'] and y==box['y']:
+            elif x==box1['x'] and y==box1['y']:
                     print(' b ',end='')
+            elif x==box2['x'] and y==box2['y']:
+                print(' b ',end='')
             elif x==potal['x'] and y==potal['y']:
                 print(' g ',end='')
             #border:
@@ -27,19 +31,24 @@ def display_map(size,pusher,boxlist,potal):
 def pusher_move():
     if move=="A":
         pusher['x']-=1
-        move_modify(pusher['x'])
+        if pusher['x']==bdx[0]:
+            pusher['x']+=1
     elif move=='D':
         pusher['x']+=1
-        move_modify(pusher['x'])
+        if pusher['x']==bdx[1]:
+             pusher['x']-=1
     elif move=='W':
         pusher['y']-=1
-        move_modify(pusher['y'])
+        if pusher['y']==bdx[0]:
+            pusher['y']+=1
     elif move=='S':
         pusher['y']+=1
-        move_modify(pusher['y'])
-    box_move()
+        if pusher['y']==bdx[0]:
+            pusher['y']+=1
+    for i in boxlist:
+        box_move(i)
         
-def box_move():
+def box_move(box):
     #horizontal move
     if pusher['y']==box['y']:
         if pusher['x'] ==box['x']:
@@ -75,12 +84,10 @@ def move_modify(a):
         if a==bdx[0]:
             a+=1
     elif move=='D':
-        b='x'
         if a==bdx[1]:
             a-=1  
     #vertical border:
     if move=='S':
-        b='y'
         if a==bdx[1]:
             a-=1
     elif move=='W':
@@ -96,15 +103,15 @@ pusher={
     'x':1,
     'y':1
     }
-box={
+box1={
     'x':3,
     'y':3
     }
 box2={
-    'x':10,
-    'y':6
+    'x':4,
+    'y':5
     }
-potal={
+potal1={
     'x':3,
     'y':5
     }
@@ -112,10 +119,10 @@ potal2={
     'x':1,
     'y':5
     }
-boxlist=[box,box2]
-print(boxlist)
+boxlist=[box1,box2]
+potallist=[potal1,potal2]
 #Game loop
-if box['x']==potal['x'] and box['y']==potal['y']:
+if box1['x']==potal1['x'] and box1['y']==potal1['y']:
     loop=False
 else:
     loop=True
@@ -123,10 +130,7 @@ move=0
 bdx=[0,size['x']+1]
 bdy=[0,size['y']+1] 
 while(loop):
-    display_map(size,pusher,box,potal)
+    display_map(size,pusher,box1,potal1)
     move=input('your move?').upper()
     pusher_move()
-    print(box)
-    print(potal)
-
-
+    print(pusher['x'])
