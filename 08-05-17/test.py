@@ -13,7 +13,9 @@ def display_map(size,pusher,box,potal):
                     print(' b ',end='')
             elif x==box2['x'] and y==box2['y']:
                 print(' b ',end='')
-            elif x==potal['x'] and y==potal['y']:
+            elif x==potal1['x'] and y==potal1['y']:
+                print(' g ',end='')
+            elif x==potal2['x'] and y==potal2['y']:
                 print(' g ',end='')
             #border:
             elif x==0:
