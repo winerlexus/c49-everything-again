@@ -23,6 +23,7 @@ def init_pygame():
 
 def run():
     game_manager.run()
+    game_manager.check_hit()
 
 def draw(screen):
     screen.fill((0,0,0))
@@ -40,18 +41,21 @@ clock = pygame.time.Clock()
 game_manager.add(Background())
 game_manager.add(Player())
 game_manager.add(Enemy_type1())
-               
+n = 120               
 while loop:
         ## update logic
         events = pygame.event.get() ## get only once per loop
         loop = handle_exit_events(events)
         input_manager.run(events)
         run()
-        
+        n -= 1
+        if n == 0:
+            game_manager.generate_enemy()
+            n = 120
         ## update graphics
         draw(screen)
         
         ## delay by frame rate
         pygame.display.flip()
-        clock.tick(20)
+        clock.tick(30)
 pygame.quit()

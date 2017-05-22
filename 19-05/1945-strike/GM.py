@@ -40,22 +40,31 @@ class GameManager:
     def remove(self,game_object):       
         #bullet not penetrate 
         if game_object.type == "bullet":
-            self.bullet.remove(game_object)
+            self.bullets.remove(game_object)
         if game_object.type == "enemy":
             self.enemies.remove(game_object)
     
     def check_hit(self):
-        for bullet in game_manager.bullets :
-            for enemy in game_manager.enemies:
-                print(enemy)
-                if bullet.x >= enemy.x - enemy.image.get_width()/2 and bullet.x<= enemy.x + enemy.image.get_width()/2\
-                    and bullet.y <= enemy.y + enemy.image.get_height()/2:
-                        game_manager.remove(self.bullets.bullet)
-                        enemy.alive = False
-    
-    def cleanup(self):
-        for enemy in gamemanager.enemies:
-            if enemy.alive == False:
-                gamemanager.remover(enemy)                   
-                                                                                     
+        for enemy in game_manager.enemies:
+            for bullet in game_manager.bullets :
+                if bullet.y < 0 or bullet.y>800:
+                    game_manager.remove(bullet)
+                elif bullet.x >= enemy.x - enemy.image.get_width() and bullet.x<= enemy.x + enemy.image.get_width()\
+                        and bullet.y <= enemy.y + enemy.image.get_height()/2:
+                            game_manager.remove(bullet)
+                            enemy.alive = False
+                            if enemy.alive == False:
+                                game_manager.remove(enemy)
+
+    def generate_enemy(self):
+        first_enemy = enemies.Enemy_type1()
+        game_manager.add(first_enemy)
+#    def cleanup(self):
+#        for enemy in game_manager.enemies:
+#            if enemy.alive == False:
+#                game_manager.remove(enemy)
+#        for bullet in game_manager.bullets:
+#            if bullet.y < 0 or bullet.y > 800:
+#                game_manager.remove(bullet)           
+#                                                                                     
 game_manager = GameManager()

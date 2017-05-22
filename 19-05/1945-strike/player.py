@@ -7,8 +7,8 @@ class Player:
     def __init__(self):
         self.image = pygame.image.load("resources/plane3.png")
         self.type = "player"
-        self.x = 0 - self.image.get_width()/2
-        self.y = 0 -self.image.get_height()/2                            
+        self.x = 400 - self.image.get_width()/2
+        self.y = 500 -self.image.get_height()/2                            
     
     def draw(self,screen):
         screen.blit(self.image,\
