@@ -11,9 +11,8 @@ stock={'banana': 6,
     'pear': 15,
 }
 ##method 1:
-'''
 for key in prices:
-    print(key,':', prices[str(key)])'''
+    print(key,':', prices[str(key)])
 
 ##method 2:
 total=0

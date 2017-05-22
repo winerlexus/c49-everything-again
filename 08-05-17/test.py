@@ -31,34 +31,33 @@ def display_map(size,pusher,box,potal):
         print('')
 
 def pusher_move():
-    if move=="A":
+    if move=="A" and pusher['x']>1:
         pusher['x']-=1
-        if pusher['x']==bdx[0]:
-            pusher['x']+=1
-    elif move=='D':
+##        if pusher['x']==bdx[0]:
+##            pusher['x']+=1
+    elif move=='D' and pusher['x']<size['x']:
         pusher['x']+=1
-        if pusher['x']==bdx[1]:
-             pusher['x']-=1
-    elif move=='W':
+##        if pusher['x']==bdx[1]:
+##             pusher['x']-=1
+    elif move=='W' and pusher['y']>1:
         pusher['y']-=1
-        if pusher['y']==bdx[0]:
-            pusher['y']+=1
-    elif move=='S':
+##        if pusher['y']==bdx[0]:
+##            pusher['y']+=1
+    elif move=='S' and pusher['y']<size['y']:
         pusher['y']+=1
-        if pusher['y']==bdx[0]:
-            pusher['y']+=1
+##        if pusher['y']==bdx[0]:
+##            pusher['y']+=1
     for i in boxlist:
         box_move(i)
         
 def box_move(box):
     #horizontal move
-    if pusher['y']==box['y']:
-        if pusher['x'] ==box['x']:
-            if move=='D':
+    if pusher['y']==box['y'] and pusher['x'] ==box['x']:
+            if move=='D' and box['x']<size['x'] and pusher['x']<size['x']-1:
                 box['x']=box['x']+1
-                if box['x']==bdx[1]:
-                    box['x']-=1
-                    pusher['x']-=1
+##                if box['x']==size['x']-1:
+##                    box['x']-=1
+##                    pusher['x']-=1
             elif move=='A':
                 box['x']=box['x']-1
                 if box['x']==bdx[0]:
@@ -78,25 +77,9 @@ def box_move(box):
                 if box['y']==bdy[1]:
                     box['y']-=1
                     pusher['y']-=1
-
-## prevent box or player movement from obstacle
-def move_modify(a):
-    #horizontal border:
-    if move=='A':
-        if a==bdx[0]:
-            a+=1
-    elif move=='D':
-        if a==bdx[1]:
-            a-=1  
-    #vertical border:
-    if move=='S':
-        if a==bdx[1]:
-            a-=1
-    elif move=='W':
-        b='y'
-        if a==bdx[0]:
-            a+=1
-
+def in_map(size,point):
+    return point['x']>=0 and point['x']<size['x'] \
+           and point['y']>=0 and point['y']<size['y']
 size={
     'x':5,
     'y':5
@@ -132,7 +115,28 @@ move=0
 bdx=[0,size['x']+1]
 bdy=[0,size['y']+1] 
 while(loop):
+    ##graphics
     display_map(size,pusher,box1,potal1)
+    ##gameplay
     move=input('your move?').upper()
+
+    dx=0
+    dy=0
+
+    if move=='D':
+        dx=1
+    elif move=='A':
+        dx=-1
+    elif move=='W':
+        dy=-1
+    elif move=='S':
+        dy=1
+
+    pusher_next={}
+    pusher_next['x']=pusher['x']+dx
+    pusher_next['y']=pusher['y']+dy
+    if in_map(size,pusher):
+        pusher=pusher_next
+        
     pusher_move()
     print(pusher['x'])
