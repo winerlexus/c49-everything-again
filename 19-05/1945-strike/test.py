@@ -57,5 +57,5 @@ while loop:
         
         ## delay by frame rate
         pygame.display.flip()
-        clock.tick(60)
+        clock.tick(30)
 pygame.quit()
