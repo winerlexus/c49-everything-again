@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+ # -*- coding: utf-8 -*-
 """
 Created on Fri May 19 20:03:40 2017
 
@@ -11,6 +11,7 @@ from background import*
 from input_manager import *
 from GM import *
 from enemies import *
+from constraints import *
 
 loop = True
 
@@ -40,8 +41,10 @@ clock = pygame.time.Clock()
 
 game_manager.add(Background())
 game_manager.add(Player())
-game_manager.add(Enemy_type1())
-n = 120               
+game_manager.add(Enemy())
+
+n = 120    
+#player1.constraints = Constraints(0,600,0,800,player1)           
 while loop:
         ## update logic
         events = pygame.event.get() ## get only once per loop
